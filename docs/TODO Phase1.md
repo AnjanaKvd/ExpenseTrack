@@ -29,43 +29,43 @@
     
     - [x] Initialize a new Git repository.
         
-    - [ ] Create a monorepo structure with two main directories: `/core-service` (Node.js) and `/nlp-service` (Python).
+    - [x] Create a monorepo structure with two main directories: `/core-service` (Node.js) and `/nlp-service` (Python).
         
-    - [ ] Add a `.gitignore` file to exclude `node_modules`, `__pycache__`, environment files (`.env`), etc.
+    - [x] Add a `.gitignore` file to exclude `node_modules`, `__pycache__`, environment files (`.env`), etc.
         
 - **[ ] Database Setup (PostgreSQL)**
     
-    - [ ] Install PostgreSQL and start the service.
+    - [x] Install PostgreSQL and start the service.
         
-    - [ ] Create a new database user and password for the application.
+    - [x] Create a new database user and password for the application.
         
-    - [ ] Create the primary database (e.g., `trustledger_dev`).
+    - [x] Create the primary database (e.g., `trustledger_dev`).
         
-    - [ ] In `/core-service`, choose and install a migration tool (e.g., `node-pg-migrate`) or an ORM with migration support (e.g., `Prisma`, `Sequelize`).
+    - [x] In `/core-service`, choose and install a migration tool (e.g., `node-pg-migrate`) or an ORM with migration support (e.g., `Prisma`, `Sequelize`).
         
-    - [ ] Write and run the **first migration script** to create the `Users` and `TrackableItems` tables as defined in the technical report.
+    - [x] Write and run the **first migration script** to create the `Users` and `TrackableItems` tables as defined in the technical report.
         
 - **[ ] Core Service Setup (Node.js/Express)**
     
-    - [ ] Inside `/core-service`, run `npm init` and install dependencies: `express`, `pg` (or your ORM), `redis`, `dotenv`, `axios`.
+    - [x] Inside `/core-service`, run `npm init` and install dependencies: `express`, `pg` (or your ORM), `redis`, `dotenv`, `axios`.
         
-    - [ ] Create the basic Express server file (`index.js` or `app.js`).
+    - [x] Create the basic Express server file (`index.js` or `app.js`).
         
-    - [ ] Create a `/webhook` POST endpoint that simply logs the request body to the console for now.
+    - [x] Create a `/webhook` POST endpoint that simply logs the request body to the console for now.
         
-    - [ ] Set up database connection logic.
+    - [x] Set up database connection logic.
         
 - **[ ] WhatsApp Gateway Setup (`whatsapp-web.js`)**
     
-    - [ ] Create a separate directory for this temporary tool, e.g., `/dev-gateway`.
+    - [x] Create a separate directory for this temporary tool, e.g., `/dev-gateway`.
         
-    - [ ] Install `whatsapp-web.js` and `qrcode-terminal`.
+    - [x] Install `whatsapp-web.js` and `qrcode-terminal`.
         
-    - [ ] Write the script to initialize the client, generate the QR code, and listen for the `ready` event.
+    - [x] Write the script to initialize the client, generate the QR code, and listen for the `ready` event.
         
-    - [ ] Implement the `on('message')` event listener.
+    - [x] Implement the `on('message')` event listener.
         
-    - [ ] Inside the listener, use `axios` to forward the message object to your Node.js service's `/webhook` endpoint.
+    - [x] Inside the listener, use `axios` to forward the message object to your Node.js service's `/webhook` endpoint.
         
 
 **🏁 Definition of Done for Week 1:** You can send a message on your personal WhatsApp, see the QR code, scan it, and see the message content printed in the console of your running Node.js application. The `Users` and `TrackableItems` tables exist in your PostgreSQL database.

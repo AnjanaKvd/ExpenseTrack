@@ -1,7 +1,12 @@
 /docs/.obsidian
+/docs/Temp Notes.md
 
 /dev-gateway/node_modules
 /dev-gateway/.env
 /dev-gateway/package-lock.json
 /dev-gateway/session
 /dev-gateway/.wwebjs_cache
+
+/core-service/.env
+/core-service/node_modules
+/core-service/package-lock.json
