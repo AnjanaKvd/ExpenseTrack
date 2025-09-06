@@ -1,0 +1,7 @@
+/docs/.obsidian
+
+/dev-gateway/node_modules
+/dev-gateway/.env
+/dev-gateway/package-lock.json
+/dev-gateway/session
+/dev-gateway/.wwebjs_cache
