@@ -1,6 +1,7 @@
 const userService = require('../services/userService');
 const messageService = require('../services/messageService');
 const stateService = require('../services/stateService');
+const itemService = require('../services/itemService');
 
 /**
  * Controller for handling all incoming webhook events.
@@ -55,27 +56,34 @@ const handleIncomingMessage = async (req, res) => {
 
         // A nested switch for the conversational state
         switch (userState) {
-          case 'IDLE':
-            // The user is not in a conversation, so we check for commands.
-            if (messageBody === 'add item') {
-              replyMessage = "What is the name of the item you want to track?";
-              await stateService.setUserState(user.user_id, 'AWAITING_ITEM_NAME');
-            } else {
-              // TODO: Send to NLP service in the future
-              replyMessage = `Command not recognized. Try "add item".`;
-            }
-            break;
+                case 'IDLE':
+                    // Check for commands when the user is not in a conversation
+                    if (messageBody === 'add item') {
+                        replyMessage = "What is the name of the item you want to track?";
+                        await stateService.setUserState(user.user_id, 'AWAITING_ITEM_NAME');
+                    } else if (messageBody === 'list items') { // 2. Add the 'list items' command
+                        const items = await itemService.getItems(user.user_id);
+                        replyMessage = messageService.formatItemsList(items);
+                    } else {
+                        // TODO: Send to NLP service
+                        replyMessage = `Command not recognized. Try "add item" or "list items".`;
+                    }
+                    break;
 
-          case 'AWAITING_ITEM_NAME':
-            // The user was asked for an item name, so we treat this message as the name.
-            const itemName = messagePayload.body.trim(); // Use original case for the item name
-            // TODO: Add a new `itemService` to handle this DB logic.
-            // For now, we just confirm.
-            console.log(`   - User wants to add item: "${itemName}"`);
-            replyMessage = `✅ Got it! I've added "${itemName}" to your trackable items.`;
-            await stateService.clearUserState(user.user_id); // Reset state to IDLE
-            break;
-        }
+                case 'AWAITING_ITEM_NAME':
+                    // The user was asked for an item name.
+                    const itemName = messagePayload.body.trim();
+                    if(itemName.length > 100) { // Basic validation
+                        replyMessage = "That name is a bit too long. Please try a shorter name.";
+                        // The user stays in the AWAITING_ITEM_NAME state to try again
+                    } else {
+                        // 3. Call the itemService to save the item to the database
+                        await itemService.addItem(user.user_id, itemName);
+                        replyMessage = `✅ Got it! I've added "${itemName}" to your trackable items.`;
+                        await stateService.clearUserState(user.user_id); // Reset state to IDLE
+                    }
+                    break;
+            }
         break;
       
       default:

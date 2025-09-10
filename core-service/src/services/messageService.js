@@ -38,7 +38,22 @@ Or log your first expense:
     return successText;
 };
 
+/**
+ * Formats a list of items into a user-friendly string.
+ * @param {Array<object>} items An array of item objects, each with an 'item_name' property.
+ * @returns {string} A formatted string for the user.
+ */
+const formatItemsList = (items) => {
+  if (!items || items.length === 0) {
+    return "You haven't added any items to track yet. Try starting with:\n*add item*";
+  }
+
+  const itemNames = items.map((item, index) => `${index + 1}. ${item.item_name}`);
+  return "Here are your current trackable items:\n\n" + itemNames.join('\n');
+};
+
 module.exports = {
-    getOnboardingMessage,
-    getOnboardingSuccessMessage
+  getOnboardingMessage,
+  getOnboardingSuccessMessage,
+  formatItemsList,
 };

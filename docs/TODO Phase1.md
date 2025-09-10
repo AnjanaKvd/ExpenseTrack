@@ -96,15 +96,15 @@
         
 - **[ ] Item Management Flow (Node.js)**
     
-    - [ ] If a user in the `IDLE` state sends "add item", set their state to `AWAITING_ITEM_NAME` in Redis and reply with "What is the name of the item?".
+    - [x] If a user in the `IDLE` state sends "add item", set their state to `AWAITING_ITEM_NAME` in Redis and reply with "What is the name of the item?".
         
-    - [ ] If a message comes from a user in the `AWAITING_ITEM_NAME` state, treat the message content as the new item name.
+    - [x] If a message comes from a user in the `AWAITING_ITEM_NAME` state, treat the message content as the new item name.
         
-    - [ ] Write the database logic to insert the new item into the `trackableItems` table, linked to the `user_id`.
+    - [x] Write the database logic to insert the new item into the `trackableItems` table, linked to the `user_id`.
         
-    - [ ] Set the user's state back to `IDLE` in Redis and send a confirmation message.
+    - [x] Set the user's state back to `IDLE` in Redis and send a confirmation message.
         
-    - [ ] Implement the "list items" command.
+    - [x] Implement the "list items" command.
         
 
 **🏁 Definition of Done for Week 2:** A brand-new user can join, and through a conversation, successfully add multiple items to their personal list. The bot correctly remembers which step of the conversation they are in.
