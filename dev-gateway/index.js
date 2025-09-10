@@ -98,9 +98,19 @@ client.on('message', async (message) => {
 
     // Forward the payload to the core service webhook
     try {
-        console.log(`   -> Forwarding to core service...`);
-        await axios.post(CORE_SERVICE_WEBHOOK_URL, payload);
+        const response = await axios.post(CORE_SERVICE_WEBHOOK_URL, payload);
         console.log(`   ✅ Successfully forwarded message.`);
+
+        // 2. CHECK if the response from the core service contains a reply
+        if (response.data && response.data.reply) {
+            const replyText = response.data.reply;
+            console.log(`   <- Received reply from core service: "${replyText.substring(0, 40)}..."`);
+            
+            // 3. SEND the reply back to the user via WhatsApp
+            await client.sendMessage(message.from, replyText);
+            console.log(`   ✅ Successfully sent reply to user.`);
+        }
+
     } catch (error) {
         console.error('   🔴 Error forwarding message to core service:');
         if (error.response) {

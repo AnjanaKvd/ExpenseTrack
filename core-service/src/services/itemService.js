@@ -33,7 +33,6 @@ const getItems = async (userId) => {
     try {
         const { rows } = await db.query(query, [userId]);
         console.log(`- DB: Fetched ${rows.length} items for user ${userId}.`);
-        console.log(rows);
         return rows;
     } catch (error) {
         console.error(`🔴 Error fetching items for user ${userId}:`, error);
