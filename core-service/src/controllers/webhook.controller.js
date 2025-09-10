@@ -1,5 +1,6 @@
 const userService = require('../services/userService');
 const messageService = require('../services/messageService');
+const stateService = require('../services/stateService');
 
 /**
  * Controller for handling all incoming webhook events.
@@ -48,20 +49,40 @@ const handleIncomingMessage = async (req, res) => {
         break;
 
       case 'active':
-        // This user is fully onboarded. Handle their regular commands.
-        console.log(`🗣️  Message from active user ${phoneNumber}: "${messagePayload.body}"`);
-        // TODO: This is where the FSM for adding items and the NLP logic will go next.
-        // For now, let's just acknowledge the message.
-        replyMessage = `Message received. (NLP processing to be added)`;
+        // This is where we implement the FSM logic for active users.
+        const userState = await stateService.getUserState(user.user_id);
+        console.log(`- FSM: Current state for user ${user.user_id} is [${userState}]`);
+
+        // A nested switch for the conversational state
+        switch (userState) {
+          case 'IDLE':
+            // The user is not in a conversation, so we check for commands.
+            if (messageBody === 'add item') {
+              replyMessage = "What is the name of the item you want to track?";
+              await stateService.setUserState(user.user_id, 'AWAITING_ITEM_NAME');
+            } else {
+              // TODO: Send to NLP service in the future
+              replyMessage = `Command not recognized. Try "add item".`;
+            }
+            break;
+
+          case 'AWAITING_ITEM_NAME':
+            // The user was asked for an item name, so we treat this message as the name.
+            const itemName = messagePayload.body.trim(); // Use original case for the item name
+            // TODO: Add a new `itemService` to handle this DB logic.
+            // For now, we just confirm.
+            console.log(`   - User wants to add item: "${itemName}"`);
+            replyMessage = `✅ Got it! I've added "${itemName}" to your trackable items.`;
+            await stateService.clearUserState(user.user_id); // Reset state to IDLE
+            break;
+        }
         break;
       
       default:
-          console.warn(`Unhandled user status: ${user.status}`);
-          break;
+        console.warn(`Unhandled user status: ${user.status}`);
+        break;
     }
 
-    // Acknowledge the request immediately
-    console.log('✅ Webhook processing complete. Sending response.'+ replyMessage);
     res.status(200).json({ status: 'success', reply: replyMessage });
 
   } catch (error) {

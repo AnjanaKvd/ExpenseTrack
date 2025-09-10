@@ -86,13 +86,13 @@
         
 - **[ ] State Machine & Redis Integration (Node.js)**
     
-    - [ ] Design the Finite State Machine (FSM) states on paper (e.g., `IDLE`, `AWAITING_ITEM_NAME`).
+    - [x] Design the Finite State Machine (FSM) states on paper (e.g., `IDLE`, `AWAITING_ITEM_NAME`).
         
-    - [ ] Connect your Node.js app to the local Redis server.
+    - [x] Connect your Node.js app to the local Redis server.
         
-    - [ ] Create helper functions: `setUserState(userId, state)` and `getUserState(userId)`.
+    - [x] Create helper functions: `setUserState(userId, state)` and `getUserState(userId)`.
         
-    - [ ] Modify the `/webhook` handler to fetch the user's state from Redis before processing a message.
+    - [x] Modify the `/webhook` handler to fetch the user's state from Redis before processing a message.
         
 - **[ ] Item Management Flow (Node.js)**
     
