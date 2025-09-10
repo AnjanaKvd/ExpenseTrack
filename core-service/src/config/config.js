@@ -2,7 +2,8 @@ require('dotenv').config();
 
 const config = {
   port: process.env.PORT || 3000,
-  // Add other configurations like DB_URL, REDIS_URL etc. here
+  dbUrl: process.env.DATABASE_URL,
+  reddisUrl: process.env.REDIS_URL
 };
 
 module.exports = config;

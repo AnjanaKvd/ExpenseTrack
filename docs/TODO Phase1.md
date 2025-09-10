@@ -43,7 +43,7 @@
         
     - [x] In `/core-service`, choose and install a migration tool (e.g., `node-pg-migrate`) or an ORM with migration support (e.g., `Prisma`, `Sequelize`).
         
-    - [x] Write and run the **first migration script** to create the `Users` and `TrackableItems` tables as defined in the technical report.
+    - [x] Write and run the **first migration script** to create the `Users` and `trackableItems` tables as defined in the technical report.
         
 - **[ ] Core Service Setup (Node.js/Express)**
     
@@ -68,7 +68,7 @@
     - [x] Inside the listener, use `axios` to forward the message object to your Node.js service's `/webhook` endpoint.
         
 
-**🏁 Definition of Done for Week 1:** You can send a message on your personal WhatsApp, see the QR code, scan it, and see the message content printed in the console of your running Node.js application. The `Users` and `TrackableItems` tables exist in your PostgreSQL database.
+**🏁 Definition of Done for Week 1:** You can send a message on your personal WhatsApp, see the QR code, scan it, and see the message content printed in the console of your running Node.js application. The `Users` and `trackableItems` tables exist in your PostgreSQL database.
 
 ---
 
@@ -78,11 +78,11 @@
 
 - **[ ] User Management Logic (Node.js)**
     
-    - [ ] In the `/webhook` handler, extract the sender's phone number (`message.from`).
+    - [x] In the `/webhook` handler, extract the sender's phone number (`message.from`).
         
-    - [ ] Write a database function `findOrCreateUser(phoneNumber)` that checks if the user exists and creates a new record if they don't.
+    - [x] Write a database function `findOrCreateUser(phoneNumber)` that checks if the user exists and creates a new record if they don't.
         
-    - [ ] Implement the initial onboarding logic: if user `status` is `pending_onboarding`, send a welcome message and T&Cs.
+    - [x] Implement the initial onboarding logic: if user `status` is `pending_onboarding`, send a welcome message and T&Cs.
         
 - **[ ] State Machine & Redis Integration (Node.js)**
     
@@ -100,7 +100,7 @@
         
     - [ ] If a message comes from a user in the `AWAITING_ITEM_NAME` state, treat the message content as the new item name.
         
-    - [ ] Write the database logic to insert the new item into the `TrackableItems` table, linked to the `user_id`.
+    - [ ] Write the database logic to insert the new item into the `trackableItems` table, linked to the `user_id`.
         
     - [ ] Set the user's state back to `IDLE` in Redis and send a confirmation message.
         

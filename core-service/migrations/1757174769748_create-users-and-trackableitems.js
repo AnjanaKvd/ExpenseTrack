@@ -3,22 +3,22 @@
 exports.shorthands = undefined;
 
 exports.up = pgm => {
-    pgm.createType('user_status', ['pending_onboarding', 'active', 'disabled']);
+    pgm.createType('user_status', ['pending_onboarding', 'awaiting_confirmation', 'active', 'disabled']);
     // Create Users table
-    pgm.createTable('Users', {
+    pgm.createTable('users', {
         user_id: 'id', // auto-incrementing primary key
-        phone_number: { type: 'varchar(15)', notNull: true, unique: true },
+        phone_number: { type: 'varchar(50)', notNull: true, unique: true },
         status: { type: 'user_status', notNull: true, default: 'pending_onboarding' },
         created_at: { type: 'timestamp', notNull: true, default: pgm.func('current_timestamp') }
     });
 
-    // Create TrackableItems table
-    pgm.createTable('TrackableItems', {
+    // Create trackableItems table
+    pgm.createTable('trackableItems', {
         item_id: 'id', // SERIAL PRIMARY KEY shortcut
         user_id: {
             type: 'integer',
             notNull: true,
-            references: '"Users"(user_id)', // matches the Users table PK
+            references: '"users"(user_id)', // matches the Users table PK
             onDelete: 'cascade'
         },
         item_name: { type: 'varchar(100)', notNull: true },
@@ -27,7 +27,7 @@ exports.up = pgm => {
 };
 
 exports.down = pgm => {
-    pgm.dropTable('TrackableItems');
-    pgm.dropTable('Users');
+    pgm.dropTable('trackableItems');
+    pgm.dropTable('users');
     pgm.dropType('user_status');
 };

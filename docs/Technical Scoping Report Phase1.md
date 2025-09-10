@@ -137,7 +137,7 @@ A relational database is the correct choice for this project's structured data. 
         
     - `created_at` (TIMESTAMP WITH TIME ZONE DEFAULT NOW())
         
-- `TrackableItems`
+- `trackableItems`
     
     - `item_id` (SERIAL PRIMARY KEY)
         
@@ -199,7 +199,7 @@ A relational database is the correct choice for this project's structured data. 
     
     - Implement the FSM for the new user welcome flow (T&Cs).
         
-    - Build the logic for adding and listing `TrackableItems`.
+    - Build the logic for adding and listing `trackableItems`.
         
 3. **Milestone 3: Core NLP Service (2 weeks)**
     
