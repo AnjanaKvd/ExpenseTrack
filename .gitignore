@@ -10,3 +10,5 @@
 /core-service/.env
 /core-service/node_modules
 /core-service/package-lock.json
+
+/nlp-service/.rasa

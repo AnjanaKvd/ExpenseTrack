@@ -117,13 +117,13 @@
 
 - **[ ] NLP Project Setup (Python)**
     
-    - [ ] Inside `/nlp-service`, set up a Python virtual environment.
+    - [x] Inside `/nlp-service`, set up a Python virtual environment.
         
-    - [ ] `pip install flask rasa spacy`.
+    - [x] `pip install flask rasa spacy`.
         
-    - [ ] Download the necessary spaCy model (e.g., `python -m spacy download en_core_web_sm`).
+    - [x] Download the necessary spaCy model (e.g., `python -m spacy download en_core_web_sm`).
         
-    - [ ] Run `rasa init` to create the standard Rasa project structure.
+    - [x] Run `rasa init` to create the standard Rasa project structure.
         
 - **[ ] NLU Model Training (Rasa/spaCy)**
     
