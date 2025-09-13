@@ -6,86 +6,169 @@ nlu:
     - hey
     - hello
     - hi
-    - hello there
     - good morning
     - good evening
-    - moin
     - hey there
-    - let's go
-    - hey dude
-    - goodmorning
-    - goodevening
-    - good afternoon
+    - yo
+    - sup
+    - wassup
+    - hey bot
 
 - intent: goodbye
   examples: |
-    - cu
-    - good by
-    - cee you later
-    - good night
     - bye
     - goodbye
-    - have a nice day
-    - see you around
-    - bye bye
     - see you later
+    - good night
+    - cu
+    - talk to you later
+    - bye bye
 
 - intent: affirm
   examples: |
     - yes
-    - y
+    - yup
     - indeed
     - of course
-    - that sounds good
     - correct
+    - absolutely
+    - sounds good
+    - y
 
 - intent: deny
   examples: |
     - no
-    - n
     - never
-    - I don't think so
-    - don't like that
-    - no way
+    - nope
     - not really
+    - n
+    - I don't think so
 
-- intent: mood_great
+- intent: log_personal_expense # 35+ examples
   examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
+    - I spent [100](AMOUNT) on [lunch](ITEM)
+    - spent [250](AMOUNT) rs for [coffee](ITEM)
+    - [50](AMOUNT) for [water bottle](ITEM)
+    - Paid [300](AMOUNT) for my [taxi](ITEM)
+    - just bought a [book](ITEM) for [1200](AMOUNT)
+    - my [groceries](ITEM) cost [3500](AMOUNT)
+    - [40](AMOUNT) rupees on a [pen](ITEM)
+    - Expense: [60](AMOUNT) on [snacks](ITEM)
+    - Log [75](AMOUNT) for [bus fare](ITEM)
+    - I paid [80](AMOUNT) for [parking](ITEM)
+    - spent [rs 500](AMOUNT) on [a t-shirt](ITEM)
+    - my [phone bill](ITEM) was [2500](AMOUNT)
+    - just spent [ninety](AMOUNT) dollars on [a drink](ITEM)
+    - [movie ticket](ITEM) was [₹600](AMOUNT)
+    - bought [a new charger](ITEM) for [$20](AMOUNT)
+    - expense log: [train ticket](ITEM) [180](AMOUNT)
+    - [1500](AMOUNT) for [this month's internet](ITEM)
+    - I need to log an expense of [45](AMOUNT) for [some stationery](ITEM)
+    - put down [550](AMOUNT) for [petrol](ITEM)
+    - add [200](AMOUNT) to my [food](ITEM) expenses
+    - today's [lunch](ITEM) cost me [three hundred](AMOUNT)
+    - spent [120](AMOUNT) on [breakfast](ITEM)
+    - log my [transport](ITEM) cost of [90](AMOUNT)
+    - just paid [₹150](AMOUNT) for my [haircut](ITEM)
+    - record an expense of [20](AMOUNT) on [a magazine](ITEM)
+    - my [medicine](ITEM) cost [800](AMOUNT)
+    - [70](AMOUNT) on a [sandwich](ITEM)
+    - please add [650](AMOUNT) for my [phone credit](ITEM)
+    - [forty-five](AMOUNT) rupees for [laundry](ITEM)
+    - I got a [new notebook](ITEM) for [150](AMOUNT)
+    - add this to my expenses: [5000](AMOUNT) for [rent](ITEM)
+    - [85](AMOUNT) for a [movie rental](ITEM)
+    - log [a hundred](AMOUNT) for [a gift](ITEM)
+    - [dinner](ITEM) cost [750](AMOUNT)
+    - just spent [50](AMOUNT) on [a lottery ticket](ITEM)
+    - spent [250 rs](AMOUNT) for coffee
+    - spent [rs 250](AMOUNT) for rice
+    - my [₹600](AMOUNT) movie ticket
+    - log an expense of [45 rupees](AMOUNT)
+    - paid [100rs](AMOUNT) for lunch
 
-- intent: mood_unhappy
+- intent: log_shared_expense # 35+ examples
   examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
+    - shared a [cigar](ITEM) worth [160](AMOUNT) with [kamal](PERSON)
+    - I split a [3000](AMOUNT) rs [dinner](ITEM) with [Nimal](PERSON) and [Sanjaya](PERSON)
+    - [kamal](PERSON) and I had [coffee](ITEM) for [450](AMOUNT)
+    - had [lunch](ITEM) for [1200](AMOUNT) with [jane](PERSON)
+    - share [600](AMOUNT) for the [taxi](ITEM) between me and [john](PERSON)
+    - divided a [pizza](ITEM) bill of [2400](AMOUNT) among [susan](PERSON), [peter](PERSON), and me
+    - [Movie tickets](ITEM) were [1800](AMOUNT), split with [David](PERSON)
+    - paid for our [drinks](ITEM), it was [700](AMOUNT), with [samantha](PERSON)
+    - [groceries](ITEM) for [4000](AMOUNT) shared with [roommate](PERSON)
+    - shared [50](AMOUNT) for [snacks](ITEM) with [my brother](PERSON)
+    - split [150](AMOUNT) on [ice cream](ITEM) with [sara](PERSON)
+    - [Amal](PERSON), [Sunil](PERSON) and I shared a [taxi](ITEM) that cost [800](AMOUNT)
+    - I paid [120](AMOUNT) for [our coffees](ITEM) with [priya](PERSON)
+    - we split the [₹900](AMOUNT) [cab fare](ITEM), it was me and [Ravi](PERSON)
+    - [Anusha](PERSON) and I went for a [movie](ITEM), I paid [1500](AMOUNT) for both of us
+    - the [rent](ITEM) was [10000](AMOUNT), I split it with [my flatmate](PERSON)
+    - log a shared expense of [250](AMOUNT) for [lunch](ITEM) with [colleague](PERSON)
+    - me and [Sita](PERSON) split [a bottle of wine](ITEM), it was [1800](AMOUNT)
+    - [dinner](ITEM) with [the team](PERSON) came to [5000](AMOUNT), split among 4 of us
+    - shared a [₹50](AMOUNT) [auto ride](ITEM) with [a friend](PERSON)
+    - bought [a gift](ITEM) for [mom](PERSON) for [2000](AMOUNT), split with [my sister](PERSON)
+    - [fifty-fifty](AMOUNT) split on a [1000](AMOUNT) [boat ride](ITEM) with [Maria](PERSON)
+    - had to pay [350](AMOUNT) for [our meal](ITEM) with [Frank](PERSON)
+    - [Me and Alex](PERSON) split the [400](AMOUNT) bill for [the game](ITEM)
+    - share [this meal](ITEM) cost of [six hundred](AMOUNT) with [Anna](PERSON)
+    - [Our taxi](ITEM) was [seventy](AMOUNT), shared with [Ben](PERSON)
+    - Log a shared [lunch](ITEM) for [Rs. 800](AMOUNT) with [my boss](PERSON)
+    - split the [internet bill](ITEM) of [1200](AMOUNT) with [my roommate](PERSON)
+    - paid [300](AMOUNT) for [popcorn](ITEM) and [drinks](ITEM) at the cinema with [Clara](PERSON)
+    - [The hotel room](ITEM) was [4500](AMOUNT) per night, divided between me and [Tom](PERSON)
+    - I covered the [200](AMOUNT) entry [fee](ITEM) for me and [Lisa](PERSON)
+    - share the [gas bill](ITEM) of [950](AMOUNT) with [my partner](PERSON)
+    - [A cake](ITEM) for the party cost [1500](AMOUNT), split with [the whole group](PERSON)
+    - I paid [five hundred](AMOUNT) for [our tickets](ITEM) with [Sam](PERSON)
+    - we split the [2500](AMOUNT) [rental car](ITEM) cost with [the Johnsons](PERSON)
+    - shared [lunch](ITEM) with [anjana](PERSON)
+    - split [a coffee](ITEM) with [kamal](PERSON)
+    - I shared [dinner](ITEM) with [my boss](PERSON)
+    - had [a taxi](ITEM) with [sanjaya](PERSON)
+    - split a [3000 rs](AMOUNT) dinner with Nimal
+    - we split the [₹900](AMOUNT) cab fare with Ravi
+    - log a shared lunch for [Rs. 800](AMOUNT) with my boss
+    - shared [fifty dollars](AMOUNT) on snacks with my brother
+    - shared [rs 250](AMOUNT) for rice with kamal
+
+- intent: query_balance # 30+ examples
+  examples: |
+    - show share with [kamal](PERSON)
+    - what is the balance with [Nimal](PERSON)?
+    - check my share with [Sanjaya](PERSON)
+    - how much is the share with [jane](PERSON)
+    - show me the total with [john](PERSON)
+    - what's the balance between me and [susan](PERSON)
+    - view share with [David](PERSON)
+    - show my balance with [samantha](PERSON)
+    - check share [priya](PERSON)
+    - [amal](PERSON) share balance
+    - what's the total I've shared with [my roommate](PERSON)
+    - get share status for [Ravi](PERSON)
+    - balance with [Anusha](PERSON) please
+    - how much have i shared with [mom](PERSON)
+    - see share total [Sita](PERSON)
+    - tell me my share with [my colleague](PERSON)
+    - view my balance with [Frank](PERSON)
+    - check balance for [Alex](PERSON)
+    - can I see my share with [Anna](PERSON)
+    - total share with [Ben](PERSON)
+    - what do I have with [my boss](PERSON)
+    - please show the share with [Clara](PERSON)
+    - how much is the share with [Tom](PERSON)?
+    - check my share total with [Lisa](PERSON)
+    - what's my share with [my partner](PERSON)
+    - get the balance for [Sam](PERSON)
+    - show me everything with [the Johnsons](PERSON)
+    - how much shared with [my sister](PERSON)
+    - balance for [Maria](PERSON)
+    - what is the current share with [Sunil](PERSON)
 
 - intent: bot_challenge
   examples: |
     - are you a bot?
     - are you a human?
     - am I talking to a bot?
-    - am I talking to a human?

@@ -4,47 +4,56 @@ recipe: default.v1
 
 # The assistant project unique identifier
 # This default value must be replaced with a unique assistant name within your deployment
-assistant_id: 20250912-003608-random-git
+assistant_id: 20250913-142600-urban-wizard # I've updated this to a new timestamp
 
 # Configuration for Rasa NLU.
 # https://rasa.com/docs/rasa/nlu/components/
 language: en
 
-pipeline: null
-# # No configuration for the NLU pipeline was provided. The following default pipeline was used to train your model.
-# # If you'd like to customize it, uncomment and adjust the pipeline.
-# # See https://rasa.com/docs/rasa/tuning-your-model for more information.
-#   - name: WhitespaceTokenizer
-#   - name: RegexFeaturizer
-#   - name: LexicalSyntacticFeaturizer
-#   - name: CountVectorsFeaturizer
-#   - name: CountVectorsFeaturizer
-#     analyzer: char_wb
-#     min_ngram: 1
-#     max_ngram: 4
-#   - name: DIETClassifier
-#     epochs: 100
-#     constrain_similarities: true
-#   - name: EntitySynonymMapper
-#   - name: ResponseSelector
-#     epochs: 100
-#     constrain_similarities: true
-#   - name: FallbackClassifier
-#     threshold: 0.3
-#     ambiguity_threshold: 0.1
+# NLU Pipeline Configuration
+# This pipeline is designed for robust intent classification and entity extraction,
+# leveraging both traditional NLP features and deep learning.
+pipeline:
+  # 1. SpaCy Integration for powerful linguistic features
+  - name: SpacyNLP
+    model: "en_core_web_md" # Use a medium-sized English model for good balance of speed and accuracy
+    case_sensitive: false
 
-# Configuration for Rasa Core.
-# https://rasa.com/docs/rasa/core/policies/
+  # 2. Tokenizer
+  - name: SpacyTokenizer
+
+  # 3. Featurizers - These components create the features the model learns from
+  - name: SpacyFeaturizer
+    pooling: "mean"
+
+  - name: RegexFeaturizer
+
+  - name: LexicalSyntacticFeaturizer
+
+  - name: CountVectorsFeaturizer
+
+  - name: CountVectorsFeaturizer
+    analyzer: "char_wb"
+    min_ngram: 1
+    max_ngram: 4
+
+  # 4. The main classifier for intents and entities
+  - name: DIETClassifier
+    epochs: 100
+    constrain_similarities: true
+
+  # 5. Post-processing
+  - name: EntitySynonymMapper
+
+# Configuration for Rasa Core (Dialogue Management).
+# We are only training the NLU, so we can leave this commented out for now.
 policies: null
-# # No configuration for policies was provided. The following default policies were used to train your model.
-# # If you'd like to customize them, uncomment and adjust the policies.
-# # See https://rasa.com/docs/rasa/policies for more information.
-#   - name: MemoizationPolicy
-#   - name: RulePolicy
-#   - name: UnexpecTEDIntentPolicy
-#     max_history: 5
-#     epochs: 100
-#   - name: TEDPolicy
-#     max_history: 5
-#     epochs: 100
-#     constrain_similarities: true
+#  - name: MemoizationPolicy
+#  - name: RulePolicy
+#  - name: UnexpecTEDIntentPolicy
+#    max_history: 5
+#    epochs: 100
+#  - name: TEDPolicy
+#    max_history: 5
+#    epochs: 100
+#    constrain_similarities: true

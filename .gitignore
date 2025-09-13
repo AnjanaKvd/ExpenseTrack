@@ -12,3 +12,4 @@
 /core-service/package-lock.json
 
 /nlp-service/.rasa
+/nlp-service/models/*

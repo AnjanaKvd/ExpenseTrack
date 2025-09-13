@@ -127,29 +127,29 @@
         
 - **[ ] NLU Model Training (Rasa/spaCy)**
     
-    - [ ] Edit `data/nlu.yml`. **This is the most critical task.**
+    - [x] Edit `data/nlu.yml`. **This is the most critical task.**
         
-    - [ ] For each intent (`log_personal_expense`, `log_shared_expense`, `query_balance`, etc.), write **at least 30-50 diverse examples**.
+    - [x] For each intent (`log_personal_expense`, `log_shared_expense`, `query_balance`, etc.), write **at least 30-50 diverse examples**.
         
-    - [ ] Annotate all relevant entities (`AMOUNT`, `ITEM`, `PERSON`, etc.) in your examples.
+    - [x] Annotate all relevant entities (`AMOUNT`, `ITEM`, `PERSON`, etc.) in your examples.
         
-    - [ ] Edit `config.yml` to define your NLU pipeline. Ensure you include spaCy for entity extraction if needed.
+    - [x] Edit `config.yml` to define your NLU pipeline. Ensure you include spaCy for entity extraction if needed.
         
-    - [ ] Train the model using `rasa train nlu`.
+    - [x] Train the model using `rasa train nlu`.
         
-    - [ ] Test and debug the model's performance using `rasa shell nlu`.
+    - [x] Test and debug the model's performance using `rasa shell nlu`.
         
 - **[ ] Flask API Development (Python)**
     
-    - [ ] Create a `app.py` file.
+    - [x] Create a `app.py` file.
         
-    - [ ] Load the trained Rasa model.
+    - [x] Load the trained Rasa model.
         
-    - [ ] Create a `/parse` POST endpoint that accepts JSON with a `"text"` field.
+    - [x] Create a `/parse` POST endpoint that accepts JSON with a `"text"` field.
         
-    - [ ] Inside the endpoint, run the input text through the Rasa model.
+    - [x] Inside the endpoint, run the input text through the Rasa model.
         
-    - [ ] Format the output (intent and entities) into a clean JSON response and send it back.
+    - [x] Format the output (intent and entities) into a clean JSON response and send it back.
         
 
 **🏁 Definition of Done for Week 4:** The Python Flask server is running. The Node.js service can send it any user message as a string and receive a structured JSON object with the correct intent and entities.
