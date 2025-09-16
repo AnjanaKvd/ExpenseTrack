@@ -1,36 +1,41 @@
 const redisClient = require('../cache/redis');
 
-const STATE_EXPIRATION_SECONDS = 300; // State will expire in 5 minutes
+const STATE_EXPIRATION_SECONDS = 300; // State will expire in 5 minutes (300 seconds)
 
 /**
- * Sets the conversational state for a user in Redis.
+ * Sets the conversational state and context for a user in Redis.
  * @param {number} userId The user's database ID.
- * @param {string} state The state to set (e.g., 'AWAITING_ITEM_NAME').
+ * @param {string} state The state to set (e.g., 'AWAITING_EXPENSE_AMOUNT').
+ * @param {object} context The partial data collected so far.
  */
-const setUserState = async (userId, state) => {
+const setUserState = async (userId, state, context = {}) => {
   const key = `user:${userId}:state`;
+  const value = JSON.stringify({ state, context });
   try {
-    await redisClient.set(key, state, { EX: STATE_EXPIRATION_SECONDS });
-    console.log(`- STATE: User ${userId} state set to -> ${state}`);
+    await redisClient.set(key, value, { EX: STATE_EXPIRATION_SECONDS });
+    console.log(`- STATE: User ${userId} state set to -> ${state} with context:`, context);
   } catch (error) {
     console.error('🔴 Error setting user state in Redis:', error);
   }
 };
 
 /**
- * Gets the conversational state for a user from Redis.
+ * Gets the conversational state and context for a user from Redis.
  * @param {number} userId The user's database ID.
- * @returns {Promise<string>} The user's current state, or 'IDLE' if not set.
+ * @returns {Promise<{state: string, context: object}>} The user's state and context.
  */
 const getUserState = async (userId) => {
   const key = `user:${userId}:state`;
+  const defaultState = { state: 'IDLE', context: {} };
   try {
-    const state = await redisClient.get(key);
-    // If no state is found, the user is considered IDLE.
-    return state || 'IDLE';
+    const value = await redisClient.get(key);
+    if (value) {
+      return JSON.parse(value);
+    }
+    return defaultState;
   } catch (error) {
     console.error('🔴 Error getting user state from Redis:', error);
-    return 'IDLE'; // Default to IDLE on error
+    return defaultState; // Default to IDLE on error
   }
 };
 

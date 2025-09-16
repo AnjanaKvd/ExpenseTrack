@@ -7,6 +7,32 @@ const expenseService = require('../services/expenseService');
 const { extractEntities } = require('../utils/entityExtractor');
 
 /**
+ * Handles the logic for logging a shared expense, asking for missing info if needed.
+ */
+async function handleLogSharedExpense(user, entities) {
+    let { amount, item, persons } = entities;
+
+    // 1. Check for missing information and ask clarifying questions
+    if (!amount) {
+        await stateService.setUserState(user.user_id, 'AWAITING_EXPENSE_AMOUNT', { item, persons });
+        return `I see you want to log a shared expense${item ? ` for "${item}"` : ''}${persons.length > 0 ? ` with ${persons.join(', ')}` : ''}. How much was the total?`;
+    }
+    if (!item) {
+        await stateService.setUserState(user.user_id, 'AWAITING_EXPENSE_ITEM', { amount, persons });
+        return `I see you want to log a shared expense of ${amount} Rs${persons.length > 0 ? ` with ${persons.join(', ')}` : ''}. What was the item?`;
+    }
+    if (persons.length === 0) {
+        await stateService.setUserState(user.user_id, 'AWAITING_EXPENSE_PERSONS', { amount, item });
+        return `I see you want to log an expense of ${amount} Rs for "${item}". Who did you share it with?`;
+    }
+
+    // 2. If all information is present, log the expense
+    await expenseService.logSharedExpense(user.user_id, amount, item, persons);
+    await stateService.clearUserState(user.user_id);
+    return `✅ Logged shared expense: ${item} for ${amount} Rs with ${persons.join(', ')}.`;
+}
+
+/**
  * Controller for handling all incoming webhook events.
  */
 const handleIncomingMessage = async (req, res) => {
@@ -53,22 +79,18 @@ const handleIncomingMessage = async (req, res) => {
         break;
 
       case 'active':
-        const userState = await stateService.getUserState(user.user_id);
-        console.log(`- FSM: Current state for user ${user.user_id} is [${userState}]`);
+        const { state, context } = await stateService.getUserState(user.user_id);
+        console.log(`- FSM: Current state for user ${user.user_id} is [${state}]`);
 
-        switch (userState) {
+        switch (state) {
           case 'IDLE':
-            // 2. If IDLE, send the message to the NLP service instead of checking for commands.
             const nlpData = await nlpClient.parseMessage(messagePayload.body);
-
             if (!nlpData || !nlpData.intent) {
               replyMessage = "Sorry, I'm having trouble understanding. Could you rephrase?";
               break;
             }
-
             const entities = extractEntities(nlpData.entities);
 
-            // 3. Create a switch statement to handle the intent
             switch (nlpData.intent) {
               case 'greet':
                 replyMessage = "Hello! How can I help you log your expenses today?";
@@ -85,12 +107,7 @@ const handleIncomingMessage = async (req, res) => {
                 }
                 break;
               case 'log_shared_expense':
-                if (!entities.amount || !entities.item || entities.persons.length === 0) {
-                  replyMessage = "To log a shared expense, I need an amount, an item, and at least one person. For example: 'shared 1000 for a taxi with Kamal'.";
-                } else {
-                  await expenseService.logSharedExpense(user.user_id, entities.amount, entities.item, entities.persons);
-                  replyMessage = `✅ Logged shared expense: ${entities.item} for ${entities.amount} Rs with ${entities.persons.join(', ')}.`;
-                }
+                replyMessage = await handleLogSharedExpense(user, entities);
                 break;
               case 'query_balance':
                 if (entities.persons.length === 0) {
@@ -105,14 +122,30 @@ const handleIncomingMessage = async (req, res) => {
                 replyMessage = "I'm not sure how to handle that, but I'm always learning!";
                 break;
             }
-            break; // End of IDLE case
+            break;
 
-          case 'AWAITING_ITEM_NAME':
-            // This FSM logic remains the same
-            const itemName = messagePayload.body.trim();
-            await itemService.addItem(user.user_id, itemName);
-            replyMessage = `✅ Got it! I've added "${itemName}" to your trackable items.`;
-            await stateService.clearUserState(user.user_id);
+          case 'AWAITING_EXPENSE_AMOUNT':
+            // User sent a message when we were waiting for an amount
+            const newAmount = extractEntities([{ entity: 'AMOUNT', value: messageBody }]).amount;
+            if (!newAmount) {
+                replyMessage = "That doesn't look like a valid amount. Please provide a number.";
+            } else {
+                const updatedEntities = { ...context, amount: newAmount };
+                replyMessage = await handleLogSharedExpense(user, updatedEntities);
+            }
+            break;
+            
+          case 'AWAITING_EXPENSE_ITEM':
+             // Combine new info with old context and re-run the handler
+            const updatedEntitiesWithItem = { ...context, item: messageBody };
+            replyMessage = await handleLogSharedExpense(user, updatedEntitiesWithItem);
+            break;
+          
+          case 'AWAITING_EXPENSE_PERSONS':
+            // Extract persons from the message and combine with existing context
+            const persons = extractEntities([{ entity: 'PERSON', value: messageBody }]).persons;
+            const updatedEntitiesWithPersons = { ...context, persons: persons.length ? persons : [messageBody] };
+            replyMessage = await handleLogSharedExpense(user, updatedEntitiesWithPersons);
             break;
         }
         break; // End of active case
