@@ -162,29 +162,29 @@
 
 - **[ ] Database Schema Extension**
     
-    - [ ] Write and run the migration scripts to create the `Expenses` and `SharedParticipants` tables.
+    - [x] Write and run the migration scripts to create the `Expenses` and `SharedParticipants` tables.
         
 - **[ ] NLP Integration in Core Service (Node.js)**
     
-    - [ ] In the main `/webhook` handler, add the primary logic: if a user is `IDLE`, send their message to the NLP service.
+    - [x] In the main `/webhook` handler, add the primary logic: if a user is `IDLE`, send their message to the NLP service.
         
-    - [ ] Create a `switch` statement or handler map to route the request based on the returned `intent`.
+    - [x] Create a `switch` statement or handler map to route the request based on the returned `intent`.
         
 - **[ ] Business Logic for Intents (Node.js)**
     
-    - [ ] Implement the handler for `log_personal_expense`. It should extract the entities, validate them (e.g., ensure `AMOUNT` is a number), and insert a new row into the `Expenses` table.
+    - [x] Implement the handler for `log_personal_expense`. It should extract the entities, validate them (e.g., ensure `AMOUNT` is a number), and insert a new row into the `Expenses` table.
         
-    - [ ] Implement the handler for `log_shared_expense`. This is more complex:
+    - [x] Implement the handler for `log_shared_expense`. This is more complex:
         
-        - [ ] Create one record in `Expenses` with `expense_type = 'shared'`.
+        - [x] Create one record in `Expenses` with `expense_type = 'shared'`.
             
-        - [ ] Create one (or more, for future group shares) records in `SharedParticipants`, linking back to the `expense_id`.
+        - [x] Create one (or more, for future group shares) records in `SharedParticipants`, linking back to the `expense_id`.
             
-    - [ ] Implement the handler for `query_balance`.
+    - [x] Implement the handler for `query_balance`.
         
-        - [ ] Write the SQL query to `JOIN` tables and `SUM` the `share_amount` for a given `user_id` and `entity_name`.
+        - [x] Write the SQL query to `JOIN` tables and `SUM` the `share_amount` for a given `user_id` and `entity_name`.
             
-        - [ ] Format the result into a user-friendly message.
+        - [x] Format the result into a user-friendly message.
             
 - **[ ] Error Handling and Clarifications**
     

@@ -1,5 +1,4 @@
 const { Pool } = require('pg');
-
 const config = require('../config/config');
 
 const pool = new Pool({
@@ -18,4 +17,6 @@ pool.on('error', (err) => {
 module.exports = {
   // A query function that uses the pool to run SQL queries
   query: (text, params) => pool.query(text, params),
+  // FIX: Expose the pool so services can get a client for transactions
+  pool: pool,
 };

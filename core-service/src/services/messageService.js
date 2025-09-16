@@ -52,8 +52,16 @@ const formatItemsList = (items) => {
   return "Here are your current trackable items:\n\n" + itemNames.join('\n');
 };
 
+const formatBalanceMessage = (person, balance) => {
+    if (balance > 0) {
+        return `Your total share with ${person} is ${balance.toFixed(2)} Rs. ❤️`;
+    }
+    return `You haven't shared any expenses with ${person} yet.`;
+};
+
 module.exports = {
   getOnboardingMessage,
   getOnboardingSuccessMessage,
   formatItemsList,
+  formatBalanceMessage
 };
